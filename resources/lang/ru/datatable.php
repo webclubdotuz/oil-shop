@@ -1,34 +1,33 @@
 <?php
-
-// resources/lang/ru/datatable.php
+// resources/lang/en/datatable.php
 return [
-    'sEmptyTable' => 'В таблице нет данных',
-    'sInfo' => 'Показано от _START_ до _END_ из _TOTAL_ записей',
-    'sInfoEmpty' => 'Показано 0 до 0 из 0 записей',
-    'sInfoFiltered' => '(отфильтровано из _MAX_ записей)',
+    'sEmptyTable' => 'No data available in the table',
+    'sInfo' => 'Showing _START_ to _END_ of _TOTAL_ entries',
+    'sInfoEmpty' => 'Showing 0 to 0 of 0 entries',
+    'sInfoFiltered' => '(filtered from _MAX_ total entries)',
     'sInfoPostFix' => '',
     'sInfoThousands' => ',',
-    'sLengthMenu' => 'Показать _MENU_ записей',
-    'sLoadingRecords' => 'Загрузка...',
-    'sProcessing' => 'Обработка...',
-    'sSearch' => 'Поиск:',
-    'sSearchPlaceholder' => 'Поиск...',
-    'sZeroRecords' => 'Соответствующих записей не найдено',
+    'sLengthMenu' => 'Show _MENU_ entries',
+    'sLoadingRecords' => 'Loading...',
+    'sProcessing' => 'Processing...',
+    'sSearch' => 'Search:',
+    'sSearchPlaceholder' => 'Search...',
+    'sZeroRecords' => 'No matching records found',
     'oPaginate' => [
-        'sFirst' => 'Первый',
-        'sLast' => 'Последний',
-        'sNext' => 'Следующий',
-        'sPrevious' => 'Предыдущий',
+        'sFirst' => 'First',
+        'sLast' => 'Last',
+        'sNext' => 'Next',
+        'sPrevious' => 'Previous',
     ],
     'oAria' => [
-        'sSortAscending' => ': активировать для сортировки столбца по возрастанию',
-        'sSortDescending' => ': активировать для сортировки столбца по убыванию',
+        'sSortAscending' => ': activate to sort column ascending',
+        'sSortDescending' => ': activate to sort column descending',
     ],
 ];
 
-// resources/lang/ru/pagination.php
+// resources/lang/en/pagination.php
 return [
-    'previous' => 'Предыдущий',
-    'next' => 'Следующий',
+    'previous' => 'Previous',
+    'next' => 'Next',
 ];
 
