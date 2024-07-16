@@ -1,0 +1,10 @@
+{
+    "/js/app.js": "/js/app.js",
+    "/assets/js/script.js": "/assets/js/script.js",
+    "/js/plugin-script/alpine-data.js": "/js/plugin-script/alpine-data.js",
+    "/js/plugin-script/alpine-store.js": "/js/plugin-script/alpine-store.js",
+    "/js/plugin-script/apexcharts.js": "/js/plugin-script/apexcharts.js",
+    "/assets/styles/css/themes/lite-purple.min.css": "/assets/styles/css/themes/lite-purple.min.css",
+    "/css/app.css": "/css/app.css",
+    "/assets/js/common-bundle-script.js": "/assets/js/common-bundle-script.js"
+}
