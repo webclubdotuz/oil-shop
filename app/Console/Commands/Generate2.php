@@ -42,32 +42,21 @@ class Generate2 extends Command
      */
     public function handle()
     {
-        DB::beginTransaction();
-        try {
-            $adjustment_details = AdjustmentDetail::all();
+        $adjustment_details = AdjustmentDetail::all();
 
-            foreach ($adjustment_details as $adjustment_detail) {
-                $product_warehouse = product_warehouse::where('deleted_at', '=', null)
-                    ->where('product_id', '=', $adjustment_detail->product_id)
-                    ->where('warehouse_id', '=', $adjustment_detail->adjustment->warehouse_id)
-                    ->first();
+        foreach ($adjustment_details as $adjustment_detail) {
+            $product_warehouse = product_warehouse::where('product_id', '=', $adjustment_detail->product_id)
+                ->where('warehouse_id', '=', $adjustment_detail->adjustment->warehouse_id)
+                ->first();
 
-                if ($product_warehouse) {
-                    $product_warehouse->qte += $adjustment_detail->quantity;
-                    $product_warehouse->save();
-                }
 
-                echo $adjustment_detail->quantity . PHP_EOL;
-
+            if ($product_warehouse) {
+                echo $product_warehouse->product->name . " " . $product_warehouse->qte . PHP_EOL;
+                $product_warehouse->qte += $adjustment_detail->quantity;
+                $product_warehouse->save();
             }
 
-            DB::commit();
-        } catch (\Throwable $th) {
-            //throw $th;
-            echo $th->getMessage();
-            DB::rollBack();
+            echo $adjustment_detail->quantity . PHP_EOL;
         }
-
-        DB::commit();
     }
 }
