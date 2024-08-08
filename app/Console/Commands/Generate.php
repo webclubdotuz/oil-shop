@@ -1456,7 +1456,7 @@ class Generate extends Command
             $adjustment = Adjustment::create([
                 'user_id' => 1,
                 'warehouse_id' => 1,
-                'Ref' => 'Ref' . $count,
+                'Ref' => 'Ref_' . $count,
                 'date' => '2024-07-18 05:38:54.000000',
                 'notes' => 'notes' . $count,
                 'created_at' => '2024-07-18 05:38:54.000000',
