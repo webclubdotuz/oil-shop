@@ -19,11 +19,11 @@
             <form action="" method="get" class="row g-2">
                 <div class="col-6">
                     <label for="start_date">Начало</label>
-                    <input type="text" name="start_date" id="start_date" class="form-control" value="{{ $start_date }}">
+                    <input type="date" name="start_date" id="start_date" class="form-control" value="{{ $start_date }}">
                 </div>
                 <div class="col-6">
                     <label for="end_date">Конец</label>
-                    <input type="text" name="end_date" id="end_date" class="form-control" value="{{ $end_date }}">
+                    <input type="date" name="end_date" id="end_date" class="form-control" value="{{ $end_date }}">
                 </div>
                 <div class="col-12">
                     <button type="submit" class="btn btn-primary">Показать</button>
