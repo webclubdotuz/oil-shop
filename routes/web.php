@@ -72,6 +72,8 @@ if ($installed === true) {
             //-------------------------------  Reports ------------------------\\
             Route::prefix('reports')->group(function () {
 
+                Route::get('report_kassa', 'ReportController@report_kassa')->name('report_kassa');
+
                 Route::get('report_installment', 'InstallmentInfoController@index')->name('report_installment');
 
                 Route::get('report_profit', 'ReportController@report_profit')->name('report_profit');

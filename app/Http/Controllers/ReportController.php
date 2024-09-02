@@ -36,10 +36,11 @@ use App\Models\Setting;
 use Carbon\Carbon;
 use DataTables;
 use Config;
-use DB;
+// use DB;
 use PDF;
 use ArPHP\I18N\Arabic;
 use App\utils\helpers;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -52,6 +53,45 @@ class ReportController extends Controller
         $helpers = new helpers();
         $this->currency = $helpers->Get_Currency();
         $this->symbol_placement = $helpers->get_symbol_placement();
+
+    }
+
+    // report_kassa
+    public function report_kassa(Request $request)
+    {
+        $start_date = $request->start_date ?? date('Y-m-01');
+        $end_date = $request->end_date ?? date('Y-m-d');
+
+        $product_summa = DB::table('product_warehouse')
+        ->join('products', 'product_warehouse.product_id', '=', 'products.id')
+        // deleted_at
+        ->where('products.deleted_at', '=', null)
+        ->select(DB::raw('SUM(product_warehouse.qte * products.cost) as total_sum'))
+        ->value('total_sum');
+
+        $total_debt = 0;
+
+        $item['total_amount'] = DB::table('purchases')
+            ->where('deleted_at', '=', null)
+            ->sum('GrandTotal');
+
+        $item['total_paid'] = DB::table('purchases')
+            ->where('deleted_at', '=', null)
+            ->sum('paid_amount');
+
+        $total_debt =  $item['total_amount'] - $item['total_paid'];
+
+        $payment_methods = PaymentMethod::where('deleted_at', '=', null)->get(['id', 'title']);
+
+        $payment_sales = PaymentSale::where('deleted_at', '=', null)->whereBetween('date', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->get();
+
+        $sales = Sale::where('deleted_at', '=', null)->whereBetween('date', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])->get();
+
+        $CostTotalUzs = Sale::whereNull('deleted_at')
+        ->whereBetween('date', [$start_date . ' 00:00:00', $end_date . ' 23:59:59'])
+        ->sum(DB::raw('CostTotal * currency_rate'));
+
+        return view('reports.report_kassa', compact('start_date', 'end_date', 'product_summa', 'total_debt', 'payment_methods', 'payment_sales', 'sales', 'CostTotalUzs'));
 
     }
 

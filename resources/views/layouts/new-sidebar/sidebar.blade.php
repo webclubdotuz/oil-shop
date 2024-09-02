@@ -619,6 +619,12 @@
                            @can('report_profit')
                                 <li>
                                     @include('components.sidebar.child-navitem', [
+                                        'href'=>'/reports/report_kassa',
+                                        'title'=> 'Касса'
+                                    ])
+                                </li>
+                                <li>
+                                    @include('components.sidebar.child-navitem', [
                                         'href'=>'/reports/report_profit',
                                         'title'=> __('translate.ProfitandLoss')
                                     ])

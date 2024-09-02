@@ -36,7 +36,7 @@ class UserController extends Controller
 
         }
         return abort('403', __('You are not authorized'));
-    
+
     }
 
 
@@ -97,7 +97,7 @@ class UserController extends Controller
 
 
                     $image = $request->file('avatar');
-                    $filename = time().'.'.$image->extension();  
+                    $filename = time().'.'.$image->extension();
                     $image->move(public_path('/images/avatar'), $filename);
 
                 } else {
@@ -222,7 +222,7 @@ class UserController extends Controller
                     if ($request->avatar != $currentAvatar) {
 
                         $image = $request->file('avatar');
-                        $filename = time().'.'.$image->extension();  
+                        $filename = time().'.'.$image->extension();
                         $image->move(public_path('/images/avatar'), $filename);
                         $path = public_path() . '/images/avatar';
                         $userPhoto = $path . '/' . $currentAvatar;
@@ -261,7 +261,7 @@ class UserController extends Controller
                 }else{
                     $user_saved->assignedWarehouses()->detach();
                 }
-                
+
             }, 10);
 
             return response()->json(['success' => true]);
@@ -282,14 +282,14 @@ class UserController extends Controller
 		if ($user_auth->can('user_delete')){
 
             \DB::transaction(function () use ($id) {
-    
+
                 $user = User::where('deleted_at', '=', null)->findOrFail($id);
                 $user->status = 0;
                 $user->deleted_at = Carbon::now();
                 $user->save();
 
                 $user->assignedWarehouses()->detach();
-    
+
             }, 10);
 
             return response()->json(['success' => true]);
@@ -303,7 +303,7 @@ class UserController extends Controller
     {
         $user_auth = auth()->user();
         if ($user_auth->can('group_permission')){
-            
+
             //remove role
             $get_user = User::find($request->user_id);
             $get_user->removeRole($get_user->role_users_id);
@@ -321,5 +321,5 @@ class UserController extends Controller
         return abort('403', __('You are not authorized'));
     }
 
- 
+
 }
