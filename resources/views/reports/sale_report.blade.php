@@ -28,13 +28,14 @@
             <div class="table-responsive">
                 <table id="sale_table" class="display table table-hover">
                     <thead>
-                        <tr>    
+                        <tr>
                             <th>ID</th>
                             <th>{{ __('translate.Date') }}</th>
                             <th>{{ __('translate.Ref') }}</th>
                             <th>{{ __('translate.Created_by') }}</th>
                             <th>{{ __('translate.Customer') }}</th>
                             <th>{{ __('translate.warehouse') }}</th>
+                            <th>Себестоимость</th>
                             <th>{{ __('translate.Total') }}</th>
                             <th>{{ __('translate.Paid') }}</th>
                             <th>{{ __('translate.Due') }}</th>
@@ -48,6 +49,7 @@
                         <tr>
                             <th></th>
                             <th>{{ __('translate.Total') }} :</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -164,7 +166,7 @@
             $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
                 var start_date = picker.startDate.format('YYYY-MM-DD');
                 var end_date = picker.endDate.format('YYYY-MM-DD');
-                
+
                 var Ref = $('#Ref').val();
                 var payment_statut = $('#payment_status').val();
                 let client_id = $('#client_id').val();
@@ -177,11 +179,11 @@
 
             var start = moment().subtract(10, 'year');
             var end = moment().add(10, 'year');
-    
+
             function cb(start, end) {
                 $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
             }
-        
+
             $('#reportrange').daterangepicker({
             startDate: start,
             endDate: end,
@@ -240,21 +242,22 @@
                         {data: 'created_by'},
                         {data: 'client_name'},
                         {data: 'warehouse_name'},
+                        {data: 'CostTotal'},
                         {data: 'GrandTotal'},
                         {data: 'paid_amount'},
                         {data: 'due'},
                         {data: 'payment_status', name: 'payment_status'},
-                    
+
                     ],
 
                     footerCallback: function (row, data, start, end, display) {
                         var api = this.api();
-            
+
                         // Remove the formatting to get integer data for summation
                         var intVal = function (i) {
                             return typeof i === 'string' ? i.replace(/[\$, ]/g, '') * 1 : typeof i === 'number' ? i : 0;
                         };
-            
+
                         // Total over this page
                         var grand_total = api.column(6, { page: 'current' }).data().reduce(function (a, b) {
                                 return intVal(a) + intVal(b);
@@ -267,7 +270,7 @@
                         var total_due = api.column(8, { page: 'current' }).data().reduce(function (a, b) {
                             return intVal(a) + intVal(b);
                         }, 0);
-            
+
                         // Update footer
                         var numberRenderer = $.fn.dataTable.render.number(',', '.', 2).display;
 
@@ -284,7 +287,7 @@
                         }
 
                     },
-                
+
                     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
                     dom: "<'row'<'col-sm-12 col-md-7'lB><'col-sm-12 col-md-5 p-0'f>>rtip",
                     oLanguage: {
@@ -293,7 +296,7 @@
                         sInfoEmpty: "{{ __('datatable.sInfoEmpty') }}",
                         sInfoFiltered: "{{ __('datatable.sInfoFiltered') }}",
                         sInfoThousands: "{{ __('datatable.sInfoThousands') }}",
-                        sLengthMenu: "_MENU_", 
+                        sLengthMenu: "_MENU_",
                         sLoadingRecords: "{{ __('datatable.sLoadingRecords') }}",
                         sProcessing: "{{ __('datatable.sProcessing') }}",
                         sSearch: "",
@@ -335,7 +338,7 @@
                             title: function(){
                               return 'Report Sell';
                             },
-                           
+
                         },
                           {
                             extend: 'excel',
@@ -366,7 +369,7 @@
 
             // Clear Filter
             $('#Clear_Form').on('click' , function (e) {
-               
+
                 var Ref = $('#Ref').val('');
                 var payment_statut = $('#payment_status').val('0');
                 let client_id = $('#client_id').val('0');
@@ -390,20 +393,20 @@
                 var end = dates[1];
                 var start_date = moment(dates[0]).format("YYYY-MM-DD");
                 var end_date = moment(dates[1]).format("YYYY-MM-DD");
-                
+
                 var Ref = $('#Ref').val();
                 var payment_statut = $('#payment_status').val();
                 let client_id = $('#client_id').val();
                 let warehouse_id = $('#warehouse_id').val();
-        
+
                 $('#sale_table').DataTable().destroy();
                 sale_datatable(start_date, end_date, Ref,client_id, payment_statut,warehouse_id);
 
                 $('#filter_sale_report_modal').modal('hide');
-            
+
             });
 
-            
+
         });
 
 </script>

@@ -1523,6 +1523,7 @@ class ReportController extends Controller
                 $item['created_by']     = $sale->user->username;
                 $item['warehouse_name'] = $sale->warehouse->name;
                 $item['client_name']    = $sale->client->username;
+                $item['CostTotal']     = '$'.number_format($sale->CostTotal, 2, '.', ',');
                 $item['GrandTotal']     = number_format($sale->GrandTotal, 2, '.', ',');
                 $item['paid_amount']    = number_format($sale->paid_amount, 2, '.', ',');
                 $item['due']            = number_format($sale->GrandTotal - $sale->paid_amount, 2, '.', ',');
