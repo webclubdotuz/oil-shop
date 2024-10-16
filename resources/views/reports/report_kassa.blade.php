@@ -57,12 +57,12 @@
                             </tr>
                             <tr>
                                 <td>Одобрено</td>
-                                <td>{{ nf($payment_sales->sum('montant')) }} uzs</td>
+                                <td>{{ nf($payment_sales->sum('montant') - $payment_sale_returns->sum('montant')) }} uzs</td>
                             </tr>
                             @foreach ($payment_methods as $payment_method)
                             <tr>
                                 <td>{{ $payment_method->title }}</td>
-                                <td>{{ nf($payment_sales->where('payment_method_id', $payment_method->id)->sum('montant')) }} uzs</td>
+                                <td>{{ nf($payment_sales->where('payment_method_id', $payment_method->id)->sum('montant') - $payment_sale_returns->where('payment_method_id', $payment_method->id)->sum('montant')) }} uzs</td>
                             </tr>
                             @endforeach
                         </tbody>
@@ -85,6 +85,14 @@
                             <tr>
                                 <td>Долг</td>
                                 <td>{{ nf($sales->sum('GrandTotal') - $sales->sum('paid_amount')) }} uzs</td>
+                            </tr>
+                            <tr class="text-danger">
+                                <td>Возврат</td>
+                                <td>{{ nf($sale_returns->sum('GrandTotal')) }} uzs</td>
+                            </tr>
+                            <tr class="text-danger">
+                                <td>Возврат касса</td>
+                                <td>{{ nf($payment_sale_returns->sum('montant')) }} uzs</td>
                             </tr>
                             <tr>
                                 <td>Себестоимость продаж</td>
